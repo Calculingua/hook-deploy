@@ -1,0 +1,5 @@
+{
+	"script" : "/home/cali/test.sh",
+        "branch" : "dev-deploy",
+        "repo" : "Calculingua/Calculingua"
+}
