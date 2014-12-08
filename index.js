@@ -6,7 +6,7 @@ module.exports = function(config){
 
 	var app = express();
 	app.use(bodyParser.json({limit: '50mb'}));
-	
+	console.log("config:", config);	
 	app.use(function(req, res){
 		var type = req.get("X-GitHub-Event");
 		if(type == "push"){
