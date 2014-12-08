@@ -1,0 +1,10 @@
+{
+	"port": 5555,
+	"events": [
+		{
+			"script" : "/home/cali/test.sh",
+		    "branch" : "development",
+		    "repo" : "Calculingua/Calculingua"
+		}
+	]
+}
