@@ -1,6 +1,7 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var cp = require("child_process");
+var async = require("async");
 
 module.exports = function(config){
 
@@ -11,30 +12,31 @@ module.exports = function(config){
 		var type = req.get("X-GitHub-Event");
 		if(type == "push"){
 			console.log("push repo, branch:", req.body.repository.full_name, req.body.ref);
-			
-			var event, out = "";
-			for(var i = 0; i < config.events.length; i++){
-				event = config.events[i];
+			async.map(config.events, function(event, callback){
 				if(req.body.ref == "refs/heads/" + event.branch && req.body.repository.full_name == event.repo){
 					console.log("executing:", event.script);
-					out += "\nexecuting: " + event.script;
+					var out = "executing: " + event.script;
 					cp.execFile(event.script, function(err, stdout, stderr){
 						if(err){
 							console.error("child_process error:", err);
-							return res.status(500).end(err);
+							callback(err);
 						}
-						console.log("out, err: "+ stdout + " " + stderr);
 						out += ("stdout:\n\n" + stdout);
 						out += ("\nstderr:\n\n" + stderr + "\n\n");
+						callback(null, out);
 					});	
+				}else{
+					callback(null);
 				}
-			}
-			if(out.length > 0){
-				console.log("completed:", out);
-				res.status(200).end(out); 
-			}else{
-				res.status(202).end();
-			}
+			}, function(err, out){
+				if(out.length > 0){
+					console.log("completed:", out);
+					res.status(200).end(out); 
+				}else{
+					res.status(202).end();
+				}
+			});
+			
 		}else{
 			res.status(202).end();
 		}
