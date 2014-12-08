@@ -5,7 +5,7 @@ var config = require("./config.json");
 console.log("config:", config);
 
 var app = express();
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '50mb'}));
 app.use(function(req, res){
 	var type = req.get("X-GitHub-Event");
 	if(type == "push"){
