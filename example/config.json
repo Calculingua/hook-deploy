@@ -2,7 +2,7 @@
 	"port": 5555,
 	"events": [
 		{
-			"script" : "/home/cali/test.sh",
+			"script" : "/home/cali/deploy.sh",
 		    "branch" : "development",
 		    "repo" : "Calculingua/Calculingua"
 		}
