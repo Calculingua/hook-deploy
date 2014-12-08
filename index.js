@@ -26,12 +26,12 @@ module.exports = function(config){
 						callback(null, out);
 					});	
 				}else{
-					callback(null);
+					callback(null, "");
 				}
 			}, function(err, out){
 				if(out.length > 0){
 					console.log("completed:", out);
-					res.status(200).end(out); 
+					res.status(200).end(out.join("\n")); 
 				}else{
 					res.status(202).end();
 				}
