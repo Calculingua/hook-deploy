@@ -17,7 +17,7 @@ module.exports = function(config){
 				event = config.events[i];
 				if(req.body.ref == "refs/heads/" + event.branch && req.body.repository.full_name == event.repo){
 					console.log("executing");	
-					cp.execFile(config.script, function(err, stdout, stderr){
+					cp.execFile(event.script, function(err, stdout, stderr){
 						if(err){
 							console.error(err);
 						}
