@@ -16,17 +16,21 @@ module.exports = function(config){
 			for(var i = 0; i < config.events.length; i++){
 				event = config.events[i];
 				if(req.body.ref == "refs/heads/" + event.branch && req.body.repository.full_name == event.repo){
-					console.log("executing");	
+					console.log("executing:", event.script);
+					out += "\nexecuting: " + event.script;
 					cp.execFile(event.script, function(err, stdout, stderr){
 						if(err){
-							console.error(err);
+							console.error("child_process error:", err);
+							return res.status(500).end(err);
 						}
-						out += "stdout:\n\n" + stdout;
-						out += "\nstderr:\n\n" + stderr + "\n\n";
+						console.log("out, err: "+ stdout + " " + stderr);
+						out += ("stdout:\n\n" + stdout);
+						out += ("\nstderr:\n\n" + stderr + "\n\n");
 					});	
 				}
 			}
 			if(out.length > 0){
+				console.log("completed:", out);
 				res.status(200).end(out); 
 			}else{
 				res.status(202).end();
