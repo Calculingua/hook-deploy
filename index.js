@@ -21,8 +21,8 @@ module.exports = function(config){
 							console.error("child_process error:", err);
 							callback(err);
 						}
-						out += ("stdout:\n\n" + stdout);
-						out += ("\nstderr:\n\n" + stderr + "\n\n");
+						out += ("\nstdout:\n" + stdout);
+						out += ("\nstderr:\n" + stderr);
 						callback(null, out);
 					});	
 				}else{
