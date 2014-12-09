@@ -42,6 +42,6 @@ module.exports = function(config){
 		}
 	});
 
-	app.listen(config.port || 8123); 
+	app.listen(config.port || 8888); 
 };
 
