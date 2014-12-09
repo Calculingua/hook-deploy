@@ -14,23 +14,24 @@ module.exports = function(config){
 			console.log("push repo, branch:", req.body.repository.full_name, req.body.ref);
 			async.map(config.events, function(event, callback){
 				if(req.body.ref == "refs/heads/" + event.branch && req.body.repository.full_name == event.repo){
-					console.log("executing:", event.script);
 					var out = "executing: " + event.script;
+					callback(null, "executing: " + event.script);
 					cp.execFile(event.script, function(err, stdout, stderr){
+						console.log("executing:", event.script);
 						if(err){
 							console.error("child_process error:", err);
-							return callback(err);
 						}
-						out += ("\nstdout:\n" + stdout);
-						out += ("\nstderr:\n" + stderr);
-						callback(null, out);
+						console.log("stdout:");
+						console.log(stdout);
+						console.log("stderr:");
+						console.log(stderr);
 					});	
 				}else{
 					callback(null, "");
 				}
 			}, function(err, out){
+				console.log("hooker responding.");
 				if(out.length > 0){
-					console.log("completed:", out);
 					res.status(200).end(out.join("\n")); 
 				}else{
 					res.status(202).end();
