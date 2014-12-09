@@ -1,0 +1,15 @@
+{
+	"port": 9999,
+	"events": [
+		{
+			"script" : "/home/cali/deploy.sh",
+		    "branch" : "development",
+		    "repo" : "Calculingua/Calculingua"
+		},
+		{
+			"script" : "/home/cali/deploy-test.sh",
+			"branch": "hook-testing",
+			"repo" : "Calculingua/Calculingua"
+		}
+	]
+}
