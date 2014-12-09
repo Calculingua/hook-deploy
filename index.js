@@ -19,7 +19,7 @@ module.exports = function(config){
 					cp.execFile(event.script, function(err, stdout, stderr){
 						if(err){
 							console.error("child_process error:", err);
-							callback(err);
+							return callback(err);
 						}
 						out += ("\nstdout:\n" + stdout);
 						out += ("\nstderr:\n" + stderr);
