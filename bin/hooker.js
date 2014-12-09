@@ -5,7 +5,7 @@ if(process.argv.length < 3){
 	return 1;
 }
 
-var path = process.argv[2];
+var path = process.cwd() + "/" + process.argv[2];
 
 var config = require(path);
 var hook = require("../")(config);
